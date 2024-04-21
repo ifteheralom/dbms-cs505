@@ -47,7 +47,7 @@ if [ ! -d "$QUERY_DIR" ]; then
 fi
 
 for ((i=1; i<=TOTAL_QUERIES; i++)); do
-    sql_file="queries/$i.sql"
+    sql_file="$DERBY_HOME/queries/$i.sql"
     
     # Check if the SQL file exists
     if [ ! -f "$sql_file" ]; then
@@ -87,7 +87,6 @@ echo "Total execution time: $TOTAL_EXEC_TIME seconds" >> "$RESULTS_DIR/query_tim
 
 # Calculate throughput
 THROUGHPUT=$(echo "scale=2; $TOTAL_QUERIES / $TOTAL_EXEC_TIME" | bc)
-FILENAME="query_times_$(date +"%Y%m%d%H%M%S")"
-echo "Throughput: $THROUGHPUT queries per second" >> "$RESULTS_DIR/$FILENAME.log"
+echo "Throughput: $THROUGHPUT queries per second" >> "$RESULTS_DIR/query_times.log"
 
-echo "All queries executed. Check $RESULTS_DIR/$FILENAME.log for execution times."
+echo "All queries executed. Check $RESULTS_DIR/query_times.log for execution times."
