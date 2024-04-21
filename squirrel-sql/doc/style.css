@@ -1,0 +1,38 @@
+/*
+ * JEditorPane: Unitless lengths preserve the same outcome
+ * with 'w3cLengthUnits=true' or 'w3cLengthUnits=false', so
+ * prefer them over 'px' and 'pt' which produce opposite
+ * results with two of the settings.
+ */
+
+BODY { font-style: normal;
+       font-weight: normal }
+
+/* StyleSheet: Relative font sizes for block-level elements are
+ * buggy.  For headings the scaling is applied twice.  For divs,
+ * paragraphs, lists and others it is applied three times and
+ * more (depending on nesting). */
+H1  { font-size: 126% } /* 160% */
+H2  { font-size: 118% } /* 140% */
+H3  { font-size: 110% } /* 120% */
+H4  { font-size: 100% }
+P   { font-size: 100% }
+
+DIV, SPAN, OL, UL, LI, DL, DT, DD, TABLE, TR, TH, TD { font-size: inherit }
+
+H1, H2, H3, H4 { font-variant: small-caps }
+
+PRE { color: black;
+      background-color: #EEEEEE;
+      padding: 5px; padding: 5 }
+
+CODE, SAMP, KBD { font-size: 100% }
+
+KBD { background-color: #EEEEEE; color: black }
+
+BODY { margin-left: 7; margin-right: 7 }
+H1, H2, H3, H4, H5 { margin-top: 10; margin-bottom: 7 }
+P, PRE, OL, UL, DL, MENU, DIR { margin-top: 7; margin-bottom: 7 }
+
+TABLE { border: none }
+
