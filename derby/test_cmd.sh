@@ -46,6 +46,7 @@ if [ ! -d "$QUERY_DIR" ]; then
   mkdir -p "$QUERY_DIR"
 fi
 
+FILENAME="query_times_$(date +"%Y%m%d%H%M%S")"
 for ((i=1; i<=TOTAL_QUERIES; i++)); do
     sql_file="$DERBY_HOME/queries/$i.sql"
     
@@ -74,7 +75,7 @@ EOF
     # Add execution time to total
     TOTAL_EXEC_TIME=$(echo "$TOTAL_EXEC_TIME + $EXEC_TIME" | bc)
     # Log execution time in the results folder
-    echo "Query $i execution time: $EXEC_TIME seconds" >> "$RESULTS_DIR/query_times.log"
+    echo "Query $i execution time: $EXEC_TIME seconds" >> "$RESULTS_DIR/$FILENAME.log"
 done
 
 # Kill the monitoring processes
@@ -83,10 +84,10 @@ kill $IOSTAT_PID
 kill $SAR_PID
 
 # Log total execution time
-echo "Total execution time: $TOTAL_EXEC_TIME seconds" >> "$RESULTS_DIR/query_times.log"
+echo "Total execution time: $TOTAL_EXEC_TIME seconds" >> "$RESULTS_DIR/$FILENAME.log"
 
 # Calculate throughput
 THROUGHPUT=$(echo "scale=2; $TOTAL_QUERIES / $TOTAL_EXEC_TIME" | bc)
-echo "Throughput: $THROUGHPUT queries per second" >> "$RESULTS_DIR/query_times.log"
 
-echo "All queries executed. Check $RESULTS_DIR/query_times.log for execution times."
+echo "Throughput: $THROUGHPUT queries per second" >> "$RESULTS_DIR/$FILENAME.log"
+echo "All queries executed. Check $RESULTS_DIR/$FILENAME.log for execution times."
