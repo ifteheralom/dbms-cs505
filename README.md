@@ -10,7 +10,10 @@ Apache Derby is an open-source relational database management system (RDBMS) dev
 - CMake
 
 ## Installation instructions
-- We followed the instruction provided by official site: https://db.apache.org/derby/papers/DerbyTut/install_software.html
+- We followed the instruction provided by official site:
+``` sh
+https://db.apache.org/derby/papers/DerbyTut/install_software.html
+```
 
 ## Clone the project
 ``` sh
