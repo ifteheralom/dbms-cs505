@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $# -lt 2 ]; then
-    echo "Usage: $0 <db_username> <db_password>"
+if [ $# -lt 3 ]; then
+    echo "Usage: $0 <db_username> <db_password> <sql_file_name>"
     exit 1
 fi
 
@@ -17,6 +17,7 @@ DB_USER="$1"
 DB_HOST="localhost"
 DB_PORT="1527"
 DB_PASS="$2"
+SQL_FILE="$3"
 
 QUERY_DIR="queries"
 RESULTS_DIR="results"
@@ -46,9 +47,10 @@ if [ ! -d "$QUERY_DIR" ]; then
   mkdir -p "$QUERY_DIR"
 fi
 
-FILENAME="query_times_$(date +"%Y%m%d%H%M%S")"
-for ((i=1; i<=TOTAL_QUERIES; i++)); do
-    sql_file="$DERBY_HOME/queries/$i.sql"
+FILENAME="${SQL_FILE}_query_times_$(date +"%Y%m%d%H%M%S")"
+#for ((i=1; i<=TOTAL_QUERIES; i++)); do
+    #sql_file="$DERBY_HOME/queries/$i.sql"
+    sql_file="$DERBY_HOME/queries/$SQL_FILE"
     
     # Check if the SQL file exists
     if [ ! -f "$sql_file" ]; then
@@ -75,13 +77,16 @@ EOF
     # Add execution time to total
     TOTAL_EXEC_TIME=$(echo "$TOTAL_EXEC_TIME + $EXEC_TIME" | bc)
     # Log execution time in the results folder
-    echo "Query $i execution time: $EXEC_TIME seconds" >> "$RESULTS_DIR/$FILENAME.log"
-done
+    echo "Query $SQL_FILE execution time: $EXEC_TIME seconds" >> "$RESULTS_DIR/$FILENAME.log"
+#done
 
 # Kill the monitoring processes
-kill $VMSTAT_PID
-kill $IOSTAT_PID
-kill $SAR_PID
+#kill $VMSTAT_PID
+#kill $IOSTAT_PID
+#kill $SAR_PID
+echo $VMSTAT_PID
+echo $IOSTAT_PID
+echo $SAR_PID
 
 # Log total execution time
 echo "Total execution time: $TOTAL_EXEC_TIME seconds" >> "$RESULTS_DIR/$FILENAME.log"
