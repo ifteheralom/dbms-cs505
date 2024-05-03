@@ -9,7 +9,7 @@
 # Logs
 logs
 *.log
-!**/results/*.log
+!**/results/bk/*.log
 
 # dotenv environment variable files
 .env
